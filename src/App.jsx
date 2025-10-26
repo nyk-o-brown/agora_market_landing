@@ -1,75 +1,70 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 
-function App() {
-  const [count, setCount] = useState(0)
+import React, { useState, useRef } from 'react';
+
+const Card = ({ title, description, details }) => {
+  const [showDetails, setShowDetails] = useState(false);
+  const detailRef = useRef(null);
+
+  const handleToggle = () => {
+    setShowDetails(!showDetails);
+    if (!showDetails) {
+      setTimeout(() => {
+        detailRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300); // Wait for animation to start
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="max-w-4xl mx-auto text-center">
-        {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-6xl font-bold text-gray-800 mb-4">
-            React + Tailwind
-          </h1>
-          <p className="text-xl text-gray-600">
-            Beautiful, modern UI with Tailwind CSS
-          </p>
-        </div>
+    <div
+      className="relative bg-white rounded-lg shadow-md p-6 text-center transition-transform hover:scale-105 cursor-pointer overflow-hidden"
+      onClick={handleToggle}
+    >
+      <h3 className="text-xl font-semibold text-gray-800 mb-2">{title}</h3>
+      <p className="text-gray-600 mb-4">{description}</p>
 
-        {/* Logos */}
-        <div className="flex justify-center items-center gap-8 mb-12">
-          <a 
-            href="https://vite.dev" 
-            target="_blank" 
-            className="group hover:scale-110 transition-transform duration-300"
-          >
-            <img src={viteLogo} className="h-24 w-24" alt="Vite logo" />
-            <p className="text-sm text-gray-600 mt-2 group-hover:text-blue-600 transition-colors">
-              Vite
-            </p>
-          </a>
-          <a 
-            href="https://react.dev" 
-            target="_blank"
-            className="group hover:scale-110 transition-transform duration-300"
-          >
-            <img src={reactLogo} className="h-24 w-24 animate-spin-slow" alt="React logo" />
-            <p className="text-sm text-gray-600 mt-2 group-hover:text-blue-600 transition-colors">
-              React
-            </p>
-          </a>
-        </div>
-
-        {/* Counter Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 mb-8 max-w-md mx-auto">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Interactive Counter
-          </h2>
-          <div className="text-6xl font-bold text-blue-600 mb-6">
-            {count}
-          </div>
-          <button 
-            onClick={() => setCount((count) => count + 1)}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-          >
-            Increment
-          </button>
-        </div>
-
-        {/* Info */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 max-w-2xl mx-auto">
-          <p className="text-gray-700 mb-4">
-            Edit <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono">src/App.jsx</code> and save to test Hot Module Replacement (HMR)
-          </p>
-          <p className="text-gray-600 text-sm">
-            This app is built with Vite, React, and Tailwind CSS for a modern development experience.
-          </p>
-        </div>
+      <div
+        ref={detailRef}
+        className={`transition-all duration-500 ease-in-out ${
+          showDetails ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+        } overflow-hidden`}
+      >
+        <p className="text-sm text-gray-700 text-left mt-4 px-2">{details}</p>
       </div>
     </div>
-  )
+  );
+};
+
+
+
+
+
+function App() {
+  return (
+    <div className="flex flex-col items-center px-4 py-10 bg-gradient-to-r from-[#fef08a] via-[#84cc16] to-[#16a34a]">
+      <h1 className="text-6xl font-bold mb-4 text-green-500">Agora-Market</h1>
+      <p className="text-black text-lg mb-12 text-center max-w-xl">
+        We plan to make a digital market for businesses and customers.
+      </p>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl w-full">
+        <Card
+          title="Offer Services"
+          description="Let vendors showcase their expertise and connect with customers seeking solutions ."
+          details="Agora Market empowers skilled professionals and service providers to showcase what they do best. Whether you're a plumber, designer, tutor, or consultant, you can create a profile that highlights your expertise, availability, and customer reviews. This makes it easier for potential clients to find and trust you. By bridging the gap between demand and talent, Agora helps service providers grow their reach and build lasting relationships with customers."
+        />
+        <Card
+          title="Setup an Online Shop"
+          description="Enable businesses to create storefronts, manage inventory, and accept orders seamlessly ."
+          details="Starting a digital storefront has never been simpler. Agora Market enables businesses to create sleek, customizable shops where they can upload products, manage inventory, and accept orders—all from one dashboard. Whether you're selling handmade crafts, electronics, or fresh produce, the platform supports secure transactions and smooth logistics. It's designed to help entrepreneurs go digital fast, without the usual tech headaches."
+        />
+        <Card
+          title="Discover Products"
+          description="Help customers explore curated listings, trending items, and local favorites . "
+          details="For customers, Agora is a gateway to discovering unique and locally relevant products. From trending items to hidden gems, the marketplace is curated to reflect what people truly want. Smart filters, personalized recommendations, and vendor highlights make browsing intuitive and enjoyable. Whether you're shopping for essentials or exploring new finds, Agora makes the experience feel personal, efficient, and rewarding."
+        />
+      </div>
+    </div>
+  );
 }
 
-export default App
+export default App;
