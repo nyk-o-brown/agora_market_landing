@@ -41,7 +41,7 @@ const Card = ({ title, description, details }) => {
 function App() {
   return (
     <><div className="flex flex-col items-center px-4 py-10 bg-gradient-to-r from-[#fef08a] via-[#84cc16] to-[#16a34a]">
-      <h1 className="text-6xl font-bold mb-4 text-green-500">Agora-Market</h1>
+      <h1 className="text-6xl font-bold mb-4 text-white">Agora-Market</h1>
       <p className="text-black text-lg mb-12 text-center max-w-xl">
         We plan to make a digital market for businesses and customers.
       </p>
